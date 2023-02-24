@@ -1,0 +1,53 @@
+/**
+ * @param {string} s
+ * @return {string}
+ */
+var decodeString = function(s) {
+    let stack = []
+    let numstack=[]
+
+ // to store only numbers from s in numstack;
+    for(let i=0;i<s.length;i++){
+        if(!isNaN(parseInt(s[i]))){
+            let num = s[i];
+
+            while(!isNaN(parseInt(s[i+1]))){ //edge case 
+                num = num+s[i+1]
+                i++
+            }
+            numstack.push(parseInt(num));
+           
+        }
+// closing or opening brackets...
+        else if(s[i]==="]"){
+            let str='';
+
+            while(stack[stack.length-1]!=="["){
+                str = stack.pop()+str
+            }
+
+          //after str always we found [ opening bracket
+          stack.pop();
+          let repeat = numstack.pop();
+          stack.push(str.repeat(repeat));
+
+        }
+// not a number not a [ or ] then we got letter.
+        else 
+        stack.push(s[i]);
+    }
+
+// Push any remaining characters onto the stack and join into string 
+// we can also do this by    return stack.join('');
+
+
+//return stack.join('');
+
+// Or :-
+
+    let result="";
+    while(stack.length>0){
+        result = stack.pop()+result;
+    }
+    return result;
+};
