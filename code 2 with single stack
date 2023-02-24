@@ -1,0 +1,22 @@
+let s = "12[abc]3[cd]ef"
+  let stack = [];
+  for (let i = 0; i < s.length; i++) {
+    if (s[i] !== ']') {
+      stack.push(s[i]);
+    } else {
+      let str = '';
+      while (stack[stack.length - 1] !== '[') {
+        str = stack.pop() + str;
+      }
+      stack.pop(); // remove the '[' from stack
+      let numStr = '';
+      while (!isNaN(stack[stack.length - 1])) {
+        numStr = stack.pop() + numStr;
+      }
+      let repeat = parseInt(numStr);
+      let decodedStr = str.repeat(repeat);
+      stack.push(decodedStr);
+    }
+  }
+  console.log(stack.join(''));
+
